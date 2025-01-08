@@ -1,4 +1,5 @@
 import TransactionService from "@/services/TransactionService";
+import BiometricService from "@/services/BiometricService";
 import { Transaction } from "@/types/transaction";
 import { router } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
@@ -7,6 +8,7 @@ import { FlatList, Pressable, RefreshControl, SafeAreaView, Text, View } from "r
 export default function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [revealedAmounts, setRevealedAmounts] = useState<Set<string>>(new Set());
 
   // Load transactions
   const loadTransactions = useCallback(async () => {
@@ -25,6 +27,37 @@ export default function TransactionsPage() {
     setRefreshing(false);
   };
 
+  // Handle revealing amount with biometric auth
+  const handleRevealAmount = async (transactionId: string) => {
+    const authResult = await BiometricService.authenticate();
+    if (authResult.success) {
+      setRevealedAmounts(prev => new Set([...prev, transactionId]));
+    }
+  };
+
+  const renderAmount = (transaction: Transaction) => {
+    const isRevealed = revealedAmounts.has(transaction.id);
+    if (isRevealed) {
+      return (
+        <Text className={`text-xl font-bold ${transaction.type === 'debit' ? 'text-red-600' : 'text-green-600'}`}>
+          {transaction.type === "debit" ? "-" : "+"} ${transaction.amount.toFixed(2)}
+        </Text>
+      );
+    }
+    return (
+      <Pressable onPress={() => handleRevealAmount(transaction.id)} className="self-start">
+        <Text className="text-xl font-bold text-gray-600">
+          $****.**
+          <Text className="text-sm text-blue-600"> (Tap to reveal)</Text>
+        </Text>
+      </Pressable>
+    );
+  };
+
+  const handleNavigateToDetail = async (transactionId: string) => {
+    router.push(`/transactions/${transactionId}`);
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-gray-100">
       <FlatList
@@ -33,14 +66,12 @@ export default function TransactionsPage() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Pressable
-            onPress={() => router.push(`/transactions/${item.id}`)}
-            className="active:opacity-70"
+            onPress={() => handleNavigateToDetail(item.id)}
+            className={`active:opacity-70`}
           >
             <View className="p-4 bg-white mb-2 rounded-lg shadow">
               <Text className="text-lg font-medium text-gray-800">{item.description}</Text>
-              <Text className={`text-xl font-bold ${item.type === 'debit' ? 'text-red-600' : 'text-green-600'}`}>
-                {item.type === "debit" ? "-" : "+"} ${item.amount.toFixed(2)}
-              </Text>
+              {renderAmount(item)}
               <Text className="text-sm text-gray-500 mt-1">{item.date}</Text>
             </View>
           </Pressable>

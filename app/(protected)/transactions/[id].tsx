@@ -1,13 +1,16 @@
-import { View, Text, ActivityIndicator } from 'react-native'
+import { View, Text, ActivityIndicator, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams } from 'expo-router';
 import TransactionService from '@/services/TransactionService';
 import { Transaction } from '@/types/transaction';
+import BiometricService from '@/services/BiometricService';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function TransactionDetailPage() {
   const { id } = useLocalSearchParams();
   const [transaction, setTransaction] = useState<Transaction | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAmountVisible, setIsAmountVisible] = useState(false);
 
   useEffect(() => {
     const loadTransaction = async () => {
@@ -20,6 +23,13 @@ export default function TransactionDetailPage() {
     };
     loadTransaction();
   }, [id]);
+
+  const handleRevealAmount = async () => {
+    const result = await BiometricService.authenticate();
+    if (result.success) {
+      setIsAmountVisible(true);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -34,20 +44,26 @@ export default function TransactionDetailPage() {
   return (
     <View className='flex-1 bg-gray-100'>
       <View className='p-4'>
-        {/* <Pressable 
-          onPress={() => router.back()}
-          className='mb-4'
-        >
-          <Ionicons name="arrow-back" size={24} color="black" />
-        </Pressable> */}
-
         <View className='bg-white p-6 rounded-xl shadow-lg'>
           <View className='items-center mb-6'>
-            <Text className={`text-3xl font-bold ${
-              transaction.type === 'debit' ? 'text-red-600' : 'text-green-600'
-            }`}>
-              {transaction.type === "debit" ? "-" : "+"} ${transaction.amount.toFixed(2)}
-            </Text>
+            {isAmountVisible ? (
+              <Text className={`text-3xl font-bold ${
+                transaction.type === 'debit' ? 'text-red-600' : 'text-green-600'
+              }`}>
+                {transaction.type === "debit" ? "-" : "+"} ${transaction.amount.toFixed(2)}
+              </Text>
+            ) : (
+              <Pressable 
+                onPress={handleRevealAmount}
+                className="items-center space-y-2"
+              >
+                <Text className="text-3xl font-bold">$ ***.**</Text>
+                <View className="flex-row items-center space-x-2">
+                  <Ionicons name="eye-outline" size={20} color="gray" />
+                  <Text className="text-gray-500">Tap to reveal amount</Text>
+                </View>
+              </Pressable>
+            )}
           </View>
 
           <View className='space-y-4'>
@@ -70,7 +86,7 @@ export default function TransactionDetailPage() {
               <Text className='text-gray-500'>Transaction ID</Text>
               <Text className='text-lg font-medium'>{transaction.id}</Text>
             </View>
-          </View>
+            </View>
         </View>
       </View>
     </View>
