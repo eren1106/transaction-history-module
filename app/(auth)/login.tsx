@@ -1,11 +1,11 @@
 import { View, Text, Button, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'expo-router';
 import BiometricService from '@/services/BiometricService';
+import { useAuth } from '@/context/AuthProvider';
 
 export default function LoginPage() {
   const [biometricSupported, setBiometricSupported] = useState<boolean>(false);
-  const router = useRouter();
+  const { signIn } = useAuth();
 
   useEffect(() => {
     checkBiometricAvailability();
@@ -25,7 +25,7 @@ export default function LoginPage() {
     const result = await BiometricService.authenticate();
     if (result.success) {
       Alert.alert('Success', 'Authentication successful!');
-      router.push('/transactions'); // Navigate to the home page
+      signIn(); // This will trigger the navigation to transactions page
     } else {
       Alert.alert('Error', result.error || 'Authentication failed.');
     }
