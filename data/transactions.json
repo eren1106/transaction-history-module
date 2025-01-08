@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "amount": 500.0,
+    "date": "2025-01-01",
+    "description": "Grocery Shopping",
+    "type": "debit"
+  },
+  {
+    "id": "2",
+    "amount": 2000.0,
+    "date": "2025-01-02",
+    "description": "Salary",
+    "type": "credit"
+  },
+  {
+    "id": "3",
+    "amount": 150.0,
+    "date": "2025-01-03",
+    "description": "Coffee Shop",
+    "type": "debit"
+  }
+]
