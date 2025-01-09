@@ -1,7 +1,9 @@
-import { View, Text, Button, Alert, ActivityIndicator } from 'react-native'
+import { View, Alert, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import BiometricService from '@/services/BiometricService';
 import { useAuth } from '@/context/AuthProvider';
+import { Button } from '~/components/ui/button';
+import { Text } from '~/components/ui/text';
 
 export default function LoginScreen() {
   const [biometricSupported, setBiometricSupported] = useState<boolean>(false);
@@ -35,7 +37,7 @@ export default function LoginScreen() {
       setIsLoading(true);
       setError('');
       const result = await BiometricService.authenticate();
-      
+
       if (result.success) {
         await signIn();
       } else {
@@ -56,16 +58,19 @@ export default function LoginScreen() {
   };
 
   return (
-    <View className="flex-1 justify-center items-center bg-gray-100">
+    <View className="flex-1 justify-center items-center">
       <Text className="text-2xl font-bold mb-4">Login</Text>
       {isLoading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
         <Button
-          title="Login with Biometrics"
           onPress={handleBiometricLogin}
           disabled={!biometricSupported || isLoading}
-        />
+        >
+          <Text>
+            Login with Biometrics
+          </Text>
+        </Button>
       )}
       {error && (
         <Text className="text-red-500 mt-4 px-4 text-center">
