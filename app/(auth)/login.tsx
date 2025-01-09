@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import BiometricService from '@/services/BiometricService';
 import { useAuth } from '@/context/AuthProvider';
 
-export default function LoginPage() {
+export default function LoginScreen() {
   const [biometricSupported, setBiometricSupported] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');

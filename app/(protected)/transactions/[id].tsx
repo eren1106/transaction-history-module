@@ -6,7 +6,7 @@ import { Transaction } from '@/types/transaction';
 import BiometricService from '@/services/BiometricService';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function TransactionDetailPage() {
+export default function TransactionDetailScreen() {
   const { id } = useLocalSearchParams();
   const [transaction, setTransaction] = useState<Transaction | null>(null);
   const [isLoading, setIsLoading] = useState(true);
