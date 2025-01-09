@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator, Pressable } from 'react-native'
+import { View, Text, ActivityIndicator, Pressable, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams } from 'expo-router';
 import TransactionService from '@/services/TransactionService';
@@ -10,24 +10,38 @@ export default function TransactionDetailPage() {
   const { id } = useLocalSearchParams();
   const [transaction, setTransaction] = useState<Transaction | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isAmountVisible, setIsAmountVisible] = useState(false);
 
+  const loadTransaction = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const data = await TransactionService.getTransactionById(id as string);
+      setTransaction(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load transaction');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const loadTransaction = async () => {
-      try {
-        const data = await TransactionService.getTransactionById(id as string);
-        setTransaction(data);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     loadTransaction();
   }, [id]);
 
   const handleRevealAmount = async () => {
-    const result = await BiometricService.authenticate();
-    if (result.success) {
-      setIsAmountVisible(true);
+    try {
+      const result = await BiometricService.authenticate();
+      if (result.success) {
+        setIsAmountVisible(true);
+      }
+    } catch (err) {
+      Alert.alert(
+        'Authentication Failed',
+        'Unable to verify your identity. Please try again.',
+        [{ text: 'OK' }]
+      );
     }
   };
 
@@ -35,6 +49,20 @@ export default function TransactionDetailPage() {
     return (
       <View className="flex-1 justify-center items-center bg-gray-100">
         <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View className="flex-1 justify-center items-center bg-gray-100 p-4">
+        <Text className="text-red-600 mb-4">{error}</Text>
+        <Pressable 
+          onPress={loadTransaction}
+          className="bg-blue-500 px-6 py-3 rounded-lg"
+        >
+          <Text className="text-white font-medium">Retry</Text>
+        </Pressable>
       </View>
     );
   }

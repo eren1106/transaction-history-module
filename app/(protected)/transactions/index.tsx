@@ -4,16 +4,28 @@ import { Transaction } from "@/types/transaction";
 import { router } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { FlatList, Pressable, RefreshControl, SafeAreaView, Text, View } from "react-native";
+import { Alert } from "react-native";
 
 export default function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [revealedAmounts, setRevealedAmounts] = useState<Set<string>>(new Set());
-
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  
   // Load transactions
   const loadTransactions = useCallback(async () => {
-    const data = await TransactionService.getAllTransactions();
-    setTransactions(data);
+    try {
+      setError(null);
+      setLoading(true);
+      const data = await TransactionService.getAllTransactions();
+      setTransactions(data);
+    } catch (err) {
+      setError('Failed to load transactions. Please try again.');
+      Alert.alert('Error', 'Failed to load transactions');
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -29,9 +41,13 @@ export default function TransactionsPage() {
 
   // Handle revealing amount with biometric auth
   const handleRevealAmount = async (transactionId: string) => {
-    const authResult = await BiometricService.authenticate();
-    if (authResult.success) {
-      setRevealedAmounts(prev => new Set([...prev, transactionId]));
+    try {
+      const authResult = await BiometricService.authenticate();
+      if (authResult.success) {
+        setRevealedAmounts(prev => new Set([...prev, transactionId]));
+      }
+    } catch (err) {
+      Alert.alert('Error', 'Failed to authenticate biometrics');
     }
   };
 
