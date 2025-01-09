@@ -1,9 +1,10 @@
-import { View, Alert, ActivityIndicator } from 'react-native'
+import { View, Alert, ActivityIndicator, SafeAreaView, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import BiometricService from '@/services/BiometricService';
 import { useAuth } from '@/context/AuthProvider';
 import { Button } from '~/components/ui/button';
 import { Text } from '~/components/ui/text';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function LoginScreen() {
   const [biometricSupported, setBiometricSupported] = useState<boolean>(false);
@@ -58,30 +59,39 @@ export default function LoginScreen() {
   };
 
   return (
-    <View className="flex-1 justify-center items-center">
-      <Text className="text-2xl font-bold mb-4">Login</Text>
-      {isLoading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
-      ) : (
-        <Button
-          onPress={handleBiometricLogin}
-          disabled={!biometricSupported || isLoading}
-        >
-          <Text>
-            Login with Biometrics
+    <SafeAreaView className="flex-1">
+      <View className="w-full bg-primary h-64 items-center justify-center rounded-b-[3rem]">
+        <Text className="text-4xl font-bold text-primary-foreground">Welcome Back!</Text>
+        <Text className="text-primary-foreground mt-2">Fast and Secure Login</Text>
+      </View>
+      <View className="flex-1 justify-center items-center">
+        {isLoading ? (
+          <ActivityIndicator size="large" className='text-primary scale-[1.75]' />
+        ) : (
+          <View className="flex items-center justify-center gap-6">
+            <Ionicons name="finger-print" size={120} color="grey" />
+            <Button
+              onPress={handleBiometricLogin}
+              disabled={!biometricSupported || isLoading}
+              size="lg"
+            >
+              <Text>
+                Login with Biometrics
+              </Text>
+            </Button>
+          </View>
+        )}
+        {error && (
+          <Text className="text-red-500 mt-4 px-4 text-center">
+            {error}
           </Text>
-        </Button>
-      )}
-      {error && (
-        <Text className="text-red-500 mt-4 px-4 text-center">
-          {error}
-        </Text>
-      )}
-      {!biometricSupported && (
-        <Text className="text-red-500 mt-4 px-4 text-center">
-          Biometric authentication is not available on this device.
-        </Text>
-      )}
-    </View>
+        )}
+        {!biometricSupported && (
+          <Text className="text-red-500 mt-4 px-4 text-center">
+            Biometric authentication is not available on this device.
+          </Text>
+        )}
+      </View>
+    </SafeAreaView>
   );
 }
