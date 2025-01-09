@@ -4,4 +4,8 @@ export interface Transaction {
   date: string;
   description: string;
   type: "debit" | "credit";
+  category: string;
+  status: "completed" | "pending";
+  merchant: string;
+  location: string;
 }

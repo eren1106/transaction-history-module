@@ -4,20 +4,219 @@
     "amount": 500.0,
     "date": "2025-01-01",
     "description": "Grocery Shopping",
-    "type": "debit"
+    "type": "debit",
+    "category": "Groceries",
+    "status": "completed",
+    "merchant": "Giant Hypermarket",
+    "location": "Kuala Lumpur"
   },
   {
     "id": "2",
     "amount": 2000.0,
     "date": "2025-01-02",
     "description": "Salary",
-    "type": "credit"
+    "type": "credit",
+    "category": "Income",
+    "status": "completed",
+    "merchant": "ABC Corporation",
+    "location": "Kuala Lumpur"
   },
   {
     "id": "3",
     "amount": 150.0,
     "date": "2025-01-03",
     "description": "Coffee Shop",
-    "type": "debit"
+    "type": "debit",
+    "category": "Dining",
+    "status": "completed",
+    "merchant": "Starbucks",
+    "location": "Petaling Jaya"
+  },
+  {
+    "id": "4",
+    "amount": 75.0,
+    "date": "2025-01-04",
+    "description": "Mobile Top-up",
+    "type": "debit",
+    "category": "Utilities",
+    "status": "completed",
+    "merchant": "Digi",
+    "location": "Online"
+  },
+  {
+    "id": "5",
+    "amount": 1200.0,
+    "date": "2025-01-05",
+    "description": "House Rent",
+    "type": "debit",
+    "category": "Housing",
+    "status": "completed",
+    "merchant": "Property Management",
+    "location": "Kuala Lumpur"
+  },
+  {
+    "id": "6",
+    "amount": 300.0,
+    "date": "2025-01-07",
+    "description": "Online Shopping",
+    "type": "debit",
+    "category": "Shopping",
+    "status": "pending",
+    "merchant": "Shopee",
+    "location": "Online"
+  },
+  {
+    "id": "7",
+    "amount": 500.0,
+    "date": "2025-01-08",
+    "description": "Freelance Payment",
+    "type": "credit",
+    "category": "Income",
+    "status": "completed",
+    "merchant": "Upwork",
+    "location": "Online"
+  },
+  {
+    "id": "8",
+    "amount": 200.0,
+    "date": "2025-01-10",
+    "description": "Gym Membership",
+    "type": "debit",
+    "category": "Health",
+    "status": "completed",
+    "merchant": "Fitness First",
+    "location": "Petaling Jaya"
+  },
+  {
+    "id": "9",
+    "amount": 1500.0,
+    "date": "2025-01-12",
+    "description": "Car Insurance",
+    "type": "debit",
+    "category": "Insurance",
+    "status": "completed",
+    "merchant": "AIA Insurance",
+    "location": "Kuala Lumpur"
+  },
+  {
+    "id": "10",
+    "amount": 100.0,
+    "date": "2025-01-15",
+    "description": "Movie Night",
+    "type": "debit",
+    "category": "Entertainment",
+    "status": "completed",
+    "merchant": "TGV Cinemas",
+    "location": "Kuala Lumpur"
+  },
+  {
+    "id": "11",
+    "amount": 3000.0,
+    "date": "2025-01-16",
+    "description": "Bonus Payment",
+    "type": "credit",
+    "category": "Income",
+    "status": "completed",
+    "merchant": "ABC Corporation",
+    "location": "Kuala Lumpur"
+  },
+  {
+    "id": "12",
+    "amount": 250.0,
+    "date": "2025-01-18",
+    "description": "Electricity Bill",
+    "type": "debit",
+    "category": "Utilities",
+    "status": "completed",
+    "merchant": "TNB",
+    "location": "Kuala Lumpur"
+  },
+  {
+    "id": "13",
+    "amount": 180.0,
+    "date": "2025-01-20",
+    "description": "Dinner with Friends",
+    "type": "debit",
+    "category": "Dining",
+    "status": "completed",
+    "merchant": "Sushi King",
+    "location": "Petaling Jaya"
+  },
+  {
+    "id": "14",
+    "amount": 800.0,
+    "date": "2025-01-22",
+    "description": "New Phone Case",
+    "type": "debit",
+    "category": "Shopping",
+    "status": "completed",
+    "merchant": "Digital Mall",
+    "location": "Petaling Jaya"
+  },
+  {
+    "id": "15",
+    "amount": 1000.0,
+    "date": "2025-01-23",
+    "description": "Investment Deposit",
+    "type": "debit",
+    "category": "Investment",
+    "status": "completed",
+    "merchant": "Public Bank",
+    "location": "Kuala Lumpur"
+  },
+  {
+    "id": "16",
+    "amount": 150.0,
+    "date": "2025-01-25",
+    "description": "Pet Supplies",
+    "type": "debit",
+    "category": "Pets",
+    "status": "completed",
+    "merchant": "Pet Store",
+    "location": "Kuala Lumpur"
+  },
+  {
+    "id": "17",
+    "amount": 400.0,
+    "date": "2025-01-26",
+    "description": "Medical Checkup",
+    "type": "debit",
+    "category": "Healthcare",
+    "status": "pending",
+    "merchant": "KPJ Hospital",
+    "location": "Kuala Lumpur"
+  },
+  {
+    "id": "18",
+    "amount": 2000.0,
+    "date": "2025-01-28",
+    "description": "Consultation Fee",
+    "type": "credit",
+    "category": "Income",
+    "status": "completed",
+    "merchant": "Client XYZ",
+    "location": "Online"
+  },
+  {
+    "id": "19",
+    "amount": 120.0,
+    "date": "2025-01-29",
+    "description": "Internet Bill",
+    "type": "debit",
+    "category": "Utilities",
+    "status": "completed",
+    "merchant": "Unifi",
+    "location": "Online"
+  },
+  {
+    "id": "20",
+    "amount": 350.0,
+    "date": "2025-01-30",
+    "description": "Books Purchase",
+    "type": "debit",
+    "category": "Education",
+    "status": "completed",
+    "merchant": "Kinokuniya",
+    "location": "Kuala Lumpur"
   }
 ]

@@ -56,7 +56,7 @@ export default function TransactionsScreen() {
     const isRevealed = revealedAmounts.has(transaction.id);
     if (isRevealed) {
       return (
-        <Text className={`text-xl font-bold ${transaction.type === 'debit' ? 'text-red-600' : 'text-green-600'}`}>
+        <Text className={`text-xl font-bold ${transaction.type === 'debit' ? 'text-destructive' : 'text-primary'}`}>
           {transaction.type === "debit" ? "-" : "+"} RM {transaction.amount.toFixed(2)}
         </Text>
       );
@@ -86,7 +86,7 @@ export default function TransactionsScreen() {
   if (error) {
     return (
       <SafeAreaView className="flex-1 justify-center items-center">
-        <Text className="text-red-600 mb-4">{error}</Text>
+        <Text className="text-destructive mb-4">{error}</Text>
         <Pressable 
           onPress={loadTransactions}
           className="bg-primary px-4 py-2 rounded-lg"
@@ -111,7 +111,7 @@ export default function TransactionsScreen() {
             <View className="p-4 mb-2 rounded-lg shadow-md bg-background">
               <Text className="text-lg font-medium text-gray-800">{item.description}</Text>
               {renderAmount(item)}
-              <Text className="text-sm text-gray-500 mt-1">{item.date}</Text>
+              <Text className="text-sm text-muted-foreground mt-1">{item.date}</Text>
             </View>
           </Pressable>
         )}
