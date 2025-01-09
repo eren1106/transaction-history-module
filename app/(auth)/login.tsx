@@ -1,10 +1,10 @@
-import { View, Alert, ActivityIndicator, SafeAreaView, Image } from 'react-native'
+import { View, Alert, ActivityIndicator, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import BiometricService from '@/services/BiometricService';
-import { useAuth } from '@/context/AuthProvider';
 import { Button } from '~/components/ui/button';
 import { Text } from '~/components/ui/text';
 import { Ionicons } from '@expo/vector-icons';
+import useAuth from '~/hooks/useAuth';
 
 export default function LoginScreen() {
   const [biometricSupported, setBiometricSupported] = useState<boolean>(false);

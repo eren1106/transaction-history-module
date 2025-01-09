@@ -1,6 +1,6 @@
 import { useSegments, useRouter } from "expo-router";
 import { useEffect } from "react";
-import { AuthProvider, useAuth } from "@/context/AuthProvider";
+import { AuthProvider } from "@/context/AuthProvider";
 import '~/global.css';
 import { Theme, ThemeProvider, DefaultTheme } from '@react-navigation/native';
 import { Stack } from 'expo-router';
@@ -8,17 +8,12 @@ import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
 import { Platform } from 'react-native';
 import { NAV_THEME } from '~/lib/constants';
-import { useColorScheme } from '~/lib/useColorScheme';
+import useAuth from "~/hooks/useAuth";
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
   colors: NAV_THEME.light,
 };
-
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
 
 function RootLayoutNav() {
   const { isAuthenticated } = useAuth();
