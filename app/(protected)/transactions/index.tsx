@@ -3,8 +3,9 @@ import BiometricService from "@/services/BiometricService";
 import { Transaction } from "@/types/transaction";
 import { router } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, Pressable, RefreshControl, SafeAreaView, Text, View } from "react-native";
+import { FlatList, Pressable, RefreshControl, SafeAreaView, Text, View } from "react-native";
 import { Alert } from "react-native";
+import SkeletonEffect from "~/components/skeleton-effect";
 
 export default function TransactionsScreen() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -56,14 +57,14 @@ export default function TransactionsScreen() {
     if (isRevealed) {
       return (
         <Text className={`text-xl font-bold ${transaction.type === 'debit' ? 'text-red-600' : 'text-green-600'}`}>
-          {transaction.type === "debit" ? "-" : "+"} ${transaction.amount.toFixed(2)}
+          {transaction.type === "debit" ? "-" : "+"} RM {transaction.amount.toFixed(2)}
         </Text>
       );
     }
     return (
       <Pressable onPress={() => handleRevealAmount(transaction.id)} className="self-start">
         <Text className="text-xl font-bold text-gray-600">
-          $****.**
+          RM ***.**
           <Text className="text-sm text-blue-600"> (Tap to reveal)</Text>
         </Text>
       </Pressable>
@@ -76,19 +77,19 @@ export default function TransactionsScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-100 justify-center items-center">
-        <ActivityIndicator size="large" color="#0000ff" />
+      <SafeAreaView className="flex-1 bg-secondary">
+        <SkeletonEffect count={5} />
       </SafeAreaView>
     );
   }
 
   if (error) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-100 justify-center items-center">
+      <SafeAreaView className="flex-1 justify-center items-center">
         <Text className="text-red-600 mb-4">{error}</Text>
         <Pressable 
           onPress={loadTransactions}
-          className="bg-blue-500 px-4 py-2 rounded-lg"
+          className="bg-primary px-4 py-2 rounded-lg"
         >
           <Text className="text-white">Retry</Text>
         </Pressable>
@@ -97,9 +98,9 @@ export default function TransactionsScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100">
+    <SafeAreaView className="flex-1 bg-secondary">
       <FlatList
-        className="px-4"
+        className="p-4"
         data={transactions}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
@@ -107,7 +108,7 @@ export default function TransactionsScreen() {
             onPress={() => handleNavigateToDetail(item.id)}
             className={`active:opacity-70`}
           >
-            <View className="p-4 bg-white mb-2 rounded-lg shadow">
+            <View className="p-4 mb-2 rounded-lg shadow-md bg-background">
               <Text className="text-lg font-medium text-gray-800">{item.description}</Text>
               {renderAmount(item)}
               <Text className="text-sm text-gray-500 mt-1">{item.date}</Text>
