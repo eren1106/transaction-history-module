@@ -1,50 +1,47 @@
-# Welcome to your Expo app 👋
+# Welcome to Secure Transaction History App 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Welcome! This guide will help you set up and test my Expo-based React Native app.
 
-## Get started
+## Prerequisites
 
-1. Install dependencies
+Before you begin, ensure you have the following installed:
 
+1. **Node.js** (v16.x or later) - [Download Node.js](https://nodejs.org/)
+2. **npm** or **yarn** (comes with Node.js)
+3. A smartphone or emulator:
+   - **Expo Go App**: Download from [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent) or [Apple App Store](https://apps.apple.com/app/expo-go/id982107779).
+   - **Android Emulator** or **iOS Simulator**: Set up via Android Studio or Xcode.
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/your-repo.git
+   cd your-repo
+   ```
+
+2. Install dependencies:
    ```bash
    npm install
    ```
-
-2. Start the app
-
+   Or, if you prefer yarn:
    ```bash
-    npx expo start
+   yarn install
    ```
 
-In the output, you'll find options to open the app in a
+## Running the App
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+1. Start the development server:
+   ```bash
+   npx expo start
+   ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+2. Open the app:
+   - Scan the QR code in the terminal or browser with the Expo Go app on your smartphone.
+   - If using an emulator, press `a` to open Android Emulator or `i` to open iOS Simulator.
+  
 
-## Get a fresh project
+## Demo and APK
+You can access a demo video of the app and download the APK file from the following Google Drive link:
+[App Demo and APK](https://drive.google.com/drive/folders/1dTzGRWUZJhGaVV6hpJ5fkXaJciP1BGWx?usp=sharing)
 
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
