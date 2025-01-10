@@ -15,7 +15,7 @@ export default function ProtectedLayout() {
           text: "Cancel",
           style: "cancel"
         },
-        { 
+        {
           text: "Logout",
           onPress: signOut,
           style: "destructive"
@@ -39,6 +39,12 @@ export default function ProtectedLayout() {
         </Pressable>
       ),
     }}>
+      <Stack.Screen
+        name="index"
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="transactions/index"
         options={{
