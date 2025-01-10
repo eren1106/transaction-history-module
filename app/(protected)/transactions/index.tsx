@@ -7,13 +7,14 @@ import { FlatList, Pressable, RefreshControl, SafeAreaView, Text, View } from "r
 import { Alert } from "react-native";
 import SkeletonEffect from "~/components/skeleton-effect";
 import { Ionicons } from "@expo/vector-icons";
+import { useRevealedTransactions } from "@/hooks/useRevealedTransactions";
 
 export default function TransactionsScreen() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const [revealedAmounts, setRevealedAmounts] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const { revealTransaction, isRevealed } = useRevealedTransactions();
 
   // Load transactions
   const loadTransactions = useCallback(async () => {
@@ -46,7 +47,7 @@ export default function TransactionsScreen() {
     try {
       const authResult = await BiometricService.authenticate();
       if (authResult.success) {
-        setRevealedAmounts(prev => new Set([...prev, transactionId]));
+        revealTransaction(transactionId);
       }
     } catch (err) {
       Alert.alert('Error', 'Failed to authenticate biometrics');
@@ -54,8 +55,7 @@ export default function TransactionsScreen() {
   };
 
   const renderAmount = (transaction: Transaction) => {
-    const isRevealed = revealedAmounts.has(transaction.id);
-    if (isRevealed) {
+    if (isRevealed(transaction.id)) {
       return (
         <Text className={`text-xl font-bold ${transaction.type === 'debit' ? 'text-destructive' : 'text-primary'}`}>
           {transaction.type === "debit" ? "-" : "+"} RM {transaction.amount.toFixed(2)}
