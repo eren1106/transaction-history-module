@@ -39,15 +39,9 @@ Before you begin, ensure you have the following installed:
 2. Open the app:
    - Scan the QR code in the terminal or browser with the Expo Go app on your smartphone.
    - If using an emulator, press `a` to open Android Emulator or `i` to open iOS Simulator.
-  
 
-## Demo Video
-You can access a demo video of the app from the following Google Drive link:
-[App Demo](https://drive.google.com/file/d/1TN3ZMI0tVB2w3RF4SYcsZ-ndCmCX65fg/view?usp=sharing)
 
 ## Screenshots of the App
 <img align="left" height="500" src="https://github.com/user-attachments/assets/bd7841d3-82c2-4e50-bd12-34d574854873">
-<img align="left" height="500" src="https://github.com/user-attachments/assets/a6a96360-5cab-4f67-8db2-90383c85982b">
+<img align="left" height="500" src="https://github.com/user-attachments/assets/5583f63b-8bab-49d3-b500-d182e1767ea4">
 <img align="left" height="500" src="https://github.com/user-attachments/assets/f43e8fd1-63da-4f2f-a0bf-ffe1a82734ca">
-
-
