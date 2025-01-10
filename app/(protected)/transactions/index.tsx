@@ -87,13 +87,18 @@ export default function TransactionsScreen() {
         data={transactions}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
+          // transaction card
           <Pressable
             onPress={() => handleNavigateToDetail(item.id)}
             className={`active:opacity-70`}
           >
             <View className="flex-row items-center gap-3 p-4 mb-2 rounded-lg shadow-md bg-background">
               <View className={`flex justify-center items-center ${item.type === "credit" ? "bg-primary/10" : "bg-destructive/10"} rounded-full size-14`}>
-                <Ionicons name={item.type === "credit" ? "arrow-up" : "arrow-down"} size={24} color={item.type === "credit" ? "hsl(221.2 83.2% 53.3%)" : "hsl(0 84.2% 60.2%)"} />
+                <Ionicons
+                  name={item.type === "credit" ? "arrow-up" : "arrow-down"}
+                  size={24}
+                  color={item.type === "credit" ? "hsl(221.2 83.2% 53.3%)" : "hsl(0 84.2% 60.2%)"}
+                />
               </View>
               <View className="flex-1">
                 <Text className="text-lg font-bold">{item.description}</Text>
@@ -105,11 +110,11 @@ export default function TransactionsScreen() {
                     {item.type === "debit" ? "-" : "+"} RM {item.amount.toFixed(2)}
                   </Text>
                 ) : (
-                  <Pressable onPress={() => handleRevealAmount(item.id)} className="self-start">
+                  <Pressable onPress={() => handleRevealAmount(item.id)} className="self-start items-end">
                     <Text className={`text-xl font-bold ${item.type === 'debit' ? 'text-destructive' : 'text-primary'}`}>
                       RM ***.**
                     </Text>
-                    <View className="flex-row items-center gap-1">
+                    <View className="flex-row items-center">
                       <Ionicons name="eye-outline" size={16} color="hsl(215.4 16.3% 46.9%)" />
                       <Text className="text-sm text-muted-foreground"> (Tap to reveal)</Text>
                     </View>
