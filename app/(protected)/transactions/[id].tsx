@@ -7,6 +7,7 @@ import BiometricService from '@/services/BiometricService';
 import { Ionicons } from '@expo/vector-icons';
 import LoadingEffect from '@/components/loading-effect';
 import { useRevealedTransactions } from '@/hooks/useRevealedTransactions';
+import { cn, convertFirstLetterToUpperCase } from '~/lib/utils';
 
 export default function TransactionDetailScreen() {
   const { id } = useLocalSearchParams();
@@ -96,48 +97,34 @@ export default function TransactionDetailScreen() {
           </View>
 
           <View className='gap-3'>
-            <View>
-              <Text className='text-muted-foreground'>Transaction ID</Text>
-              <Text className='text-lg font-medium'>{transaction.id}</Text>
-            </View>
-
-            <View>
-              <Text className='text-muted-foreground'>Description</Text>
-              <Text className='text-lg font-medium'>{transaction.description}</Text>
-            </View>
-
-            <View>
-              <Text className='text-muted-foreground'>Type</Text>
-              <Text className='text-lg font-medium capitalize'>{transaction.type}</Text>
-            </View>
-
-            <View>
-              <Text className='text-muted-foreground'>Date</Text>
-              <Text className='text-lg font-medium'>{transaction.date}</Text>
-            </View>
-
-            <View>
-              <Text className='text-muted-foreground'>Category</Text>
-              <Text className='text-lg font-medium'>{transaction.category}</Text>
-            </View>
-
-            <View>
-              <Text className='text-muted-foreground'>Status</Text>
-              <Text className='text-lg font-medium'>{transaction.status}</Text>
-            </View>
-
-            <View>
-              <Text className='text-muted-foreground'>Merchant</Text>
-              <Text className='text-lg font-medium'>{transaction.merchant}</Text>
-            </View>
-
-            <View>
-              <Text className='text-muted-foreground'>Location</Text>
-              <Text className='text-lg font-medium'>{transaction.location}</Text>
-            </View>
+            <TransactionInfo label='Transaction ID' value={transaction.id} />
+            <TransactionInfo label='Description' value={transaction.description} />
+            <TransactionInfo
+              label='Type'
+              value={convertFirstLetterToUpperCase(transaction.type)}
+              valueClassName={`px-2 rounded-full ${transaction.type === "credit" ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive"}`}
+            />
+            <TransactionInfo label='Date' value={transaction.date} />
+            <TransactionInfo label='Category' value={transaction.category} />
+            <TransactionInfo label='Status' value={convertFirstLetterToUpperCase(transaction.status)} />
+            <TransactionInfo label='Merchant' value={transaction.merchant} />
+            <TransactionInfo label='Location' value={transaction.location} />
           </View>
         </View>
       </View>
     </SafeAreaView>
   );
 }
+
+interface TransactionInfoProps {
+  label: string;
+  value: string,
+  valueClassName?: string
+}
+
+const TransactionInfo = ({ label, value, valueClassName }: TransactionInfoProps) => (
+  <View className='self-start'>
+    <Text className='text-muted-foreground'>{label}</Text>
+    <Text className={cn('text-lg font-medium', valueClassName)}>{value}</Text>
+  </View>
+);
