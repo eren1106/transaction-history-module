@@ -21,13 +21,14 @@ function RootLayoutNav() {
   const router = useRouter();
 
   useEffect(() => {
+    const inProtectedGroup = segments[0] === '(protected)';
     const inAuthGroup = segments[0] === '(auth)';
 
-    if (!isAuthenticated && !inAuthGroup) {
-      // Redirect to the sign-in page.
+    if (!isAuthenticated && inProtectedGroup) {
+      // redirect to the login page if not authenticated
       router.replace('/login');
     } else if (isAuthenticated && inAuthGroup) {
-      // Redirect away from the sign-in page.
+      // redirect to transactions page after authenticated
       router.replace('/transactions');
     }
   }, [isAuthenticated, segments]);
