@@ -1,11 +1,10 @@
-import { View, Text, ActivityIndicator, Pressable, Alert, SafeAreaView } from 'react-native'
+import { View, Text, Pressable, Alert, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams } from 'expo-router';
 import TransactionService from '@/services/TransactionService';
 import { Transaction } from '@/types/transaction';
 import BiometricService from '@/services/BiometricService';
 import { Ionicons } from '@expo/vector-icons';
-import SkeletonEffect from '~/components/skeleton-effect';
 import LoadingEffect from '~/components/loading-effect';
 
 export default function TransactionDetailScreen() {

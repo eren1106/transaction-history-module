@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { FlatList, Pressable, RefreshControl, SafeAreaView, Text, View } from "react-native";
 import { Alert } from "react-native";
 import SkeletonEffect from "~/components/skeleton-effect";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function TransactionsScreen() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -63,10 +64,13 @@ export default function TransactionsScreen() {
     }
     return (
       <Pressable onPress={() => handleRevealAmount(transaction.id)} className="self-start">
-        <Text className="text-xl font-bold text-gray-600">
+        <Text className={`text-xl font-bold ${transaction.type === 'debit' ? 'text-destructive' : 'text-primary'}`}>
           RM ***.**
-          <Text className="text-sm text-blue-600"> (Tap to reveal)</Text>
         </Text>
+        <View className="flex-row items-center space-x-2">
+          <Ionicons name="eye-outline" size={20} color="hsl(215.4 16.3% 46.9%)" />
+          <Text className="text-sm text-muted-foreground"> (Tap to reveal)</Text>
+        </View>
       </Pressable>
     );
   };
@@ -87,7 +91,7 @@ export default function TransactionsScreen() {
     return (
       <SafeAreaView className="flex-1 justify-center items-center">
         <Text className="text-destructive mb-4">{error}</Text>
-        <Pressable 
+        <Pressable
           onPress={loadTransactions}
           className="bg-primary px-4 py-2 rounded-lg"
         >
@@ -101,6 +105,7 @@ export default function TransactionsScreen() {
     <SafeAreaView className="flex-1 bg-secondary">
       <FlatList
         className="p-4"
+        contentContainerStyle={{ paddingBottom: 20 }}
         data={transactions}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
@@ -108,10 +113,15 @@ export default function TransactionsScreen() {
             onPress={() => handleNavigateToDetail(item.id)}
             className={`active:opacity-70`}
           >
-            <View className="p-4 mb-2 rounded-lg shadow-md bg-background">
-              <Text className="text-lg font-medium text-gray-800">{item.description}</Text>
+            <View className="flex-row items-center gap-3 p-4 mb-2 rounded-lg shadow-md bg-background">
+              <View className={`flex justify-center items-center ${item.type === "credit" ? "bg-primary/10" : "bg-destructive/10"} rounded-full size-14`}>
+                <Ionicons name={item.type === "credit" ? "arrow-up" : "arrow-down"} size={24} color={item.type === "credit" ? "hsl(221.2 83.2% 53.3%)" : "hsl(0 84.2% 60.2%)"} />
+              </View>
+              <View className="flex-1">
+                <Text className="text-lg font-bold">{item.description}</Text>
+                <Text className="text-muted-foreground">{item.date}</Text>
+              </View>
               {renderAmount(item)}
-              <Text className="text-sm text-muted-foreground mt-1">{item.date}</Text>
             </View>
           </Pressable>
         )}

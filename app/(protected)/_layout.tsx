@@ -42,7 +42,7 @@ export default function ProtectedLayout() {
       <Stack.Screen
         name="transactions/index"
         options={{
-          headerTitle: 'Transactions',
+          headerTitle: 'Transactions History',
         }}
       />
       <Stack.Screen
