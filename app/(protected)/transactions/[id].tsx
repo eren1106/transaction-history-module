@@ -102,7 +102,7 @@ export default function TransactionDetailScreen() {
             <TransactionInfo
               label='Type'
               value={convertFirstLetterToUpperCase(transaction.type)}
-              valueClassName={`px-2 rounded-full ${transaction.type === "credit" ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive"}`}
+              valueClassName={`px-3 rounded-full ${transaction.type === "credit" ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive"}`}
             />
             <TransactionInfo label='Date' value={transaction.date} />
             <TransactionInfo label='Category' value={transaction.category} />

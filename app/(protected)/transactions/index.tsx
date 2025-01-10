@@ -59,8 +59,8 @@ export default function TransactionsScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView className="flex-1 bg-secondary">
-        <SkeletonEffect count={5} />
+      <SafeAreaView className="flex-1 bg-secondary p-4">
+        <SkeletonEffect count={6} />
       </SafeAreaView>
     );
   }
