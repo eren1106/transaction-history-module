@@ -16,7 +16,6 @@ export default function TransactionsScreen() {
   const [error, setError] = useState<string | null>(null);
   const { revealTransaction, isRevealed } = useRevealedTransactions();
 
-  // Load transactions
   const loadTransactions = useCallback(async () => {
     try {
       setError(null);
@@ -35,14 +34,14 @@ export default function TransactionsScreen() {
     loadTransactions();
   }, [loadTransactions]);
 
-  // Handle pull-to-refresh
+  // handle pull to refresh
   const onRefresh = async () => {
     setRefreshing(true);
     await loadTransactions();
     setRefreshing(false);
   };
 
-  // Handle revealing amount with biometric auth
+  // handle revealing amount with biometric auth
   const handleRevealAmount = async (transactionId: string) => {
     try {
       const authResult = await BiometricService.authenticate();
@@ -52,27 +51,6 @@ export default function TransactionsScreen() {
     } catch (err) {
       Alert.alert('Error', 'Failed to authenticate biometrics');
     }
-  };
-
-  const renderAmount = (transaction: Transaction) => {
-    if (isRevealed(transaction.id)) {
-      return (
-        <Text className={`text-xl font-bold ${transaction.type === 'debit' ? 'text-destructive' : 'text-primary'}`}>
-          {transaction.type === "debit" ? "-" : "+"} RM {transaction.amount.toFixed(2)}
-        </Text>
-      );
-    }
-    return (
-      <Pressable onPress={() => handleRevealAmount(transaction.id)} className="self-start">
-        <Text className={`text-xl font-bold ${transaction.type === 'debit' ? 'text-destructive' : 'text-primary'}`}>
-          RM ***.**
-        </Text>
-        <View className="flex-row items-center space-x-2">
-          <Ionicons name="eye-outline" size={20} color="hsl(215.4 16.3% 46.9%)" />
-          <Text className="text-sm text-muted-foreground"> (Tap to reveal)</Text>
-        </View>
-      </Pressable>
-    );
   };
 
   const handleNavigateToDetail = async (transactionId: string) => {
@@ -121,7 +99,23 @@ export default function TransactionsScreen() {
                 <Text className="text-lg font-bold">{item.description}</Text>
                 <Text className="text-muted-foreground">{item.date}</Text>
               </View>
-              {renderAmount(item)}
+              {
+                isRevealed(item.id) ? (
+                  <Text className={`text-xl font-bold ${item.type === 'debit' ? 'text-destructive' : 'text-primary'}`}>
+                    {item.type === "debit" ? "-" : "+"} RM {item.amount.toFixed(2)}
+                  </Text>
+                ) : (
+                  <Pressable onPress={() => handleRevealAmount(item.id)} className="self-start">
+                    <Text className={`text-xl font-bold ${item.type === 'debit' ? 'text-destructive' : 'text-primary'}`}>
+                      RM ***.**
+                    </Text>
+                    <View className="flex-row items-center gap-1">
+                      <Ionicons name="eye-outline" size={16} color="hsl(215.4 16.3% 46.9%)" />
+                      <Text className="text-sm text-muted-foreground"> (Tap to reveal)</Text>
+                    </View>
+                  </Pressable>
+                )
+              }
             </View>
           </Pressable>
         )}
