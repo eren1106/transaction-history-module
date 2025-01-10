@@ -95,7 +95,7 @@ export default function TransactionsScreen() {
             <View className="flex-row items-center gap-3 p-4 mb-2 rounded-lg shadow-md bg-background">
               <View className={`flex justify-center items-center ${item.type === "credit" ? "bg-primary/10" : "bg-destructive/10"} rounded-full size-14`}>
                 <Ionicons
-                  name={item.type === "credit" ? "arrow-up" : "arrow-down"}
+                  name={item.type === "debit" ? "arrow-up" : "arrow-down"}
                   size={24}
                   color={item.type === "credit" ? "hsl(221.2 83.2% 53.3%)" : "hsl(0 84.2% 60.2%)"}
                 />
